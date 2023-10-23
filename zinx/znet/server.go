@@ -1,9 +1,16 @@
+// @program:     ainx
+// @file:        server.go
+// @author:      ma
+// @create:      2023-10-23 11:08
+// @description:
+
 package znet
 
 import (
-	"Project/zinx/ziface"
 	"fmt"
 	"net"
+
+	"github.com/peter-matc/Ainx/zinx/ziface"
 )
 
 // IServer的接口实现，定义一个Server的服务器模块

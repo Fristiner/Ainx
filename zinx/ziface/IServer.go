@@ -1,6 +1,10 @@
-package ziface
+// @program:     ainx
+// @file:        IServer.go
+// @author:      ma
+// @create:      2023-10-23 11:08
+// @description:
 
-// 定义一个服务器接口
+package ziface
 
 type IServer interface {
 	// 启动服务器

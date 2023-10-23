@@ -1,12 +1,14 @@
+// @program:     ainx
+// @file:        Server.go
+// @author:      ma
+// @create:      2023-10-23 11:10
+// @description:
+
 package main
 
 import (
-	"Project/zinx/znet"
+	"github.com/peter-matc/Ainx/zinx/znet"
 )
-
-/*
-	基于Zinx框架来开发的 服务端应用程序
-*/
 
 func main() {
 	// 1. 创建一个Server句柄，使用Zinx的api

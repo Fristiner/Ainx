@@ -1,3 +1,9 @@
+// @program:     ainx
+// @file:        client.go
+// @author:      ma
+// @create:      2023-10-23 11:09
+// @description:
+
 package main
 
 import (
@@ -6,7 +12,6 @@ import (
 	"time"
 )
 
-// 模拟客户端
 func main() {
 	fmt.Println("client start")
 
