@@ -12,7 +12,7 @@ import (
 
 func main() {
 	// 1. 创建一个Server句柄，使用Zinx的api
-	s := znet.NewServer("[zinx V0.1]")
+	s := znet.NewServer("[zinx V0.2]")
 
 	// 2.启动serve
 

@@ -16,16 +16,15 @@ type Request struct {
 	// 已经和客户端建立好的链接
 	conn ziface.IConnection
 	// 客户端请求的数据
-
 	data []byte
 }
 
 func (r Request) GetConnection() ziface.IConnection {
-	//TODO implement me
+
 	return r.conn
 }
 
 func (r Request) GetData() []byte {
-	//TODO implement me
+
 	return r.data
 }

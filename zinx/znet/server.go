@@ -7,7 +7,6 @@
 package znet
 
 import (
-	"errors"
 	"fmt"
 	"net"
 
@@ -24,6 +23,8 @@ type Server struct {
 	IP string
 	// 服务器监听的端口
 	Port int
+	// 当前的Server添加一个router，server注册的链接处理对应的业务
+	Router ziface.IRouter
 }
 
 // 初始化Server模块
@@ -33,14 +34,20 @@ func NewServer(name string) ziface.IServer {
 		IPVersion: "tcp4",
 		IP:        "0.0.0.0",
 		Port:      8999,
+		Router:    nil,
 	}
 	return s
+}
+
+func (s *Server) AddRouter(router ziface.IRouter) {
+	s.Router = router
+	// 添加路由方法
+	fmt.Println("Add Router success!")
 }
 
 func (s *Server) Start() {
 	fmt.Printf("[Start] Server Listenner at IP: %s,Port %d, is starting\n", s.IP, s.Port)
 	go func() {
-
 		// 1.获取一个TCP的Addr
 		Addr, err := net.ResolveTCPAddr(s.IPVersion, fmt.Sprintf("%s:%d", s.IP, s.Port))
 		if err != nil {
@@ -74,7 +81,7 @@ func (s *Server) Start() {
 			// 客户端已经连接 做一个 最大512字节的回显业务  发什么 给他回复什么
 
 			// 将处理新连接的业务方法 和conn进行绑定，得到链接模块
-			dealConn := NewConnection(conn, cid, CallBackToClient)
+			dealConn := NewConnection(conn, cid, s.Router)
 			cid++
 
 			// 启动当前的业务处理
@@ -107,16 +114,16 @@ func (s *Server) Start() {
 }
 
 // 定义当前客户端连接所绑定的handle api 后面应该自定义
-func CallBackToClient(conn *net.TCPConn, data []byte, cnt int) error {
-
-	// 回显的业务
-	fmt.Println("[Conn Handle] CallBackToClient ")
-	if _, err := conn.Write(data[:cnt]); err != nil {
-		fmt.Println("write back buf err ", err)
-		return errors.New("CallBackToClient error")
-	}
-	return nil
-}
+//func CallBackToClient(conn *net.TCPConn, data []byte, cnt int) error {
+//
+//	// 回显的业务
+//	fmt.Println("[Conn Handle] CallBackToClient ")
+//	if _, err := conn.Write(data[:cnt]); err != nil {
+//		fmt.Println("write back buf err ", err)
+//		return errors.New("CallBackToClient error")
+//	}
+//	return nil
+//}
 
 func (s *Server) Stop() {
 	// TODO 将一些服务器的资源，状态或者一些已经开辟的链接信息 进行停止或者回收
