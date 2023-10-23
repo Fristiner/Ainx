@@ -14,7 +14,8 @@ import (
 	"github.com/peter-matc/Ainx/zinx/ziface"
 )
 
-// IServer的接口实现，定义一个Server的服务器模块
+// Server
+// @Description: IServer的接口实现，定义一个Server的服务器模块
 type Server struct {
 	//服务器的名称
 	Name string
@@ -28,6 +29,11 @@ type Server struct {
 	Router ziface.IRouter
 }
 
+// NewServer
+// @Description: 初始化Server模块
+// @param name
+// @return ziface.IServer
+//
 // 初始化Server模块
 func NewServer(name string) ziface.IServer {
 	s := &Server{
@@ -55,7 +61,7 @@ func (s *Server) Start() {
 		// 1.获取一个TCP的Addr
 		Addr, err := net.ResolveTCPAddr(s.IPVersion, fmt.Sprintf("%s:%d", s.IP, s.Port))
 		if err != nil {
-			fmt.Println("resolve tcp addt error: ", err)
+			fmt.Println("resolve tcp addr error: ", err)
 			return
 		}
 
@@ -66,7 +72,7 @@ func (s *Server) Start() {
 			return
 		}
 		// 连接成功
-		fmt.Println("start Zinx server success ", s.Name, " success, Listenning")
+		fmt.Println("start Zinx server success ", s.Name, " success, Listening")
 
 		// 分配id
 
@@ -82,8 +88,7 @@ func (s *Server) Start() {
 				fmt.Println("Accept err", err)
 				continue
 			}
-			// 客户端已经连接 做一个 最大512字节的回显业务  发什么 给他回复什么
-
+			// 客户端已经连接做一个最大512 字节的回显业务发什么给他回复什么
 			// 将处理新连接的业务方法 和conn进行绑定，得到链接模块
 			dealConn := NewConnection(conn, cid, s.Router)
 			cid++

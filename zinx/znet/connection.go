@@ -14,7 +14,8 @@ import (
 	"github.com/peter-matc/Ainx/zinx/ziface"
 )
 
-// 连接模块
+// Connection
+// @Description: 连接模块
 type Connection struct {
 	// 当前的Socket TCP套接字
 	Conn *net.TCPConn
@@ -33,10 +34,12 @@ type Connection struct {
 	Router ziface.IRouter
 }
 
+// StartReader
+// @Description:
+// @receiver c
 func (c *Connection) StartReader() {
-	//
 	fmt.Println("Reader Goroutine is running...")
-	defer fmt.Printf("connID= ", c.ConnID, " Reader is exit,remote addr is ", c.GetRemoteAddr().String())
+	defer fmt.Println("connID = ", c.ConnID, " Reader is exit,remote addr is ", c.GetRemoteAddr().String())
 	defer c.Stop()
 	// 当前的处理业务
 	for {
@@ -121,16 +124,12 @@ func (c *Connection) Send(data []byte) error {
 	return nil
 }
 
-// 初始化连接模块的方法
-//
-
 // NewConnection
-//
-//	@Description:
-//	@param conn
-//	@param connID
-//	@param router
-//	@return *Connection
+// @Description: 初始化连接模块的方法
+// @param conn
+// @param connID
+// @param router
+// @return *Connection
 func NewConnection(conn *net.TCPConn, connID uint32, router ziface.IRouter) *Connection {
 	c := &Connection{
 		Conn:     conn,

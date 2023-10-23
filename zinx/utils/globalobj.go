@@ -10,6 +10,8 @@ import (
 // 定义 存储一切有关zinx框架的全局参数， 供其他模块使用
 // 一些参数可以通过zinx.json由用户进行配置
 
+// GlobalObj
+// @Description: 全局变量结构体
 type GlobalObj struct {
 	// Server
 	TcpServer ziface.IServer
@@ -20,8 +22,7 @@ type GlobalObj struct {
 	// 服务器名称
 	Name string
 
-	//Zinx
-
+	// Zinx
 	// 版本号
 	Version string
 	// 当前服务器主机允许的最大链接数

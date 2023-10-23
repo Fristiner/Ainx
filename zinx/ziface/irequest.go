@@ -6,13 +6,21 @@
 
 package ziface
 
-// IRequest 接口
-// 把客户端请求的链接信息，和请求的数据 包装到了一个Request中
-
+// IRequest
+// @Description:  把客户端请求的链接信息，和请求的数据 包装到了一个Request中
 type IRequest interface {
-	// 得到当前链接
+	//
+	// GetConnection
+	// @Description: 得到当前连接
+	// @return IConnection
+	//
 	GetConnection() IConnection
 
+	//
+	// GetData
 	// 得到请求的消息数据
+	// @Description: 数据
+	// @return []byte
+	//
 	GetData() []byte
 }

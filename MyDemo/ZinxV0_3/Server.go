@@ -13,8 +13,11 @@ type PingRouter struct {
 	znet.BaseRouter
 }
 
-// Test PreRouter
-func (this *PingRouter) PreHandle(request ziface.IRequest) {
+// PreHandle
+// @Description: Test PreRouter
+// @receiver p
+// @param request
+func (p *PingRouter) PreHandle(request ziface.IRequest) {
 	fmt.Println("Call Router PreHandle..")
 	_, err := request.GetConnection().GetTCPConnection().Write([]byte("before ping.. \n"))
 	if err != nil {
@@ -23,8 +26,11 @@ func (this *PingRouter) PreHandle(request ziface.IRequest) {
 
 }
 
-// Test Handle
-func (this *PingRouter) Handle(request ziface.IRequest) {
+// Handle
+// @Description: Test Handle
+// @receiver p
+// @param request
+func (p *PingRouter) Handle(request ziface.IRequest) {
 	fmt.Println("Call Router Handle..")
 	_, err := request.GetConnection().GetTCPConnection().Write([]byte("ping ping ping...\n"))
 	if err != nil {
@@ -33,9 +39,11 @@ func (this *PingRouter) Handle(request ziface.IRequest) {
 
 }
 
-// Test PostHandle
-
-func (this *PingRouter) PostHandle(request ziface.IRequest) {
+// PostHandle
+// @Description: Test PostHandle
+// @receiver p
+// @param request
+func (p *PingRouter) PostHandle(request ziface.IRequest) {
 	fmt.Println("Call Router after Handle..")
 	_, err := request.GetConnection().GetTCPConnection().Write([]byte("after ping...\n"))
 	if err != nil {
@@ -51,5 +59,4 @@ func main() {
 	s.AddRouter(&PingRouter{})
 	// 3.启动server
 	s.Serve()
-
 }

@@ -12,6 +12,8 @@ import (
 
 //
 
+// Request
+// @Description: Request请求体
 type Request struct {
 	// 已经和客户端建立好的链接
 	conn ziface.IConnection
