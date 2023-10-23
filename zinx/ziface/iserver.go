@@ -1,5 +1,5 @@
 // @program:     ainx
-// @file:        IServer.go
+// @file:        iserver.go
 // @author:      ma
 // @create:      2023-10-23 11:08
 // @description:
