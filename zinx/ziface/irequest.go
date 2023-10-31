@@ -17,10 +17,14 @@ type IRequest interface {
 	GetConnection() IConnection
 
 	//
-	// GetData
+	// GetMsg
 	// 得到请求的消息数据
 	// @Description: 数据
 	// @return []byte
 	//
+	GetMsg() IMessage
+
 	GetData() []byte
+
+	GetMsgID() uint32
 }

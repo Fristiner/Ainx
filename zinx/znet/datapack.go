@@ -18,6 +18,14 @@ func NewDataPack() *DataPack {
 	return &DataPack{}
 }
 
+func NewMsgPackage(id uint32, data []byte) *Message {
+	return &Message{
+		Id:      id,
+		DataLen: uint32(len(data)),
+		Data:    data,
+	}
+}
+
 func (dp *DataPack) GetHeadLen() uint32 {
 	// 四个字节长度
 	// DataLen uint32 4 + ID uint32 4
