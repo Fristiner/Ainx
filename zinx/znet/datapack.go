@@ -14,6 +14,10 @@ import (
 type DataPack struct {
 }
 
+func NewDataPack() *DataPack {
+	return &DataPack{}
+}
+
 func (dp *DataPack) GetHeadLen() uint32 {
 	// 四个字节长度
 	// DataLen uint32 4 + ID uint32 4
@@ -25,17 +29,17 @@ func (dp *DataPack) Pack(msg ziface.IMessage) ([]byte, error) {
 	dataBuff := bytes.NewBuffer([]byte{})
 
 	// 将dataLen写入
-	err := binary.Write(dataBuff, binary.BigEndian, msg.GetMsgLen())
+	err := binary.Write(dataBuff, binary.LittleEndian, msg.GetMsgLen())
 	if err != nil {
 		return nil, err
 	}
 	// 将MsgId 写入
-	err1 := binary.Write(dataBuff, binary.BigEndian, msg.GetMsgId())
+	err1 := binary.Write(dataBuff, binary.LittleEndian, msg.GetMsgId())
 	if err1 != nil {
 		return nil, err1
 	}
 	// 将data 数据写入
-	err2 := binary.Write(dataBuff, binary.BigEndian, msg.GetData())
+	err2 := binary.Write(dataBuff, binary.LittleEndian, msg.GetData())
 	if err2 != nil {
 		return nil, err2
 	}
@@ -55,14 +59,14 @@ func (dp *DataPack) Unpack(binaryData []byte) (ziface.IMessage, error) {
 	// 只解压head信息，得到datalen和MsgId
 	msg := &Message{}
 
-	err := binary.Read(readerBuff, binary.BigEndian, &msg.DataLen)
+	err := binary.Read(readerBuff, binary.LittleEndian, &msg.DataLen)
 	if err != nil {
 		return nil, err
 	}
 
 	// 读取MsgId
 
-	err1 := binary.Read(readerBuff, binary.BigEndian, &msg.DataLen)
+	err1 := binary.Read(readerBuff, binary.LittleEndian, &msg.Id)
 	if err1 != nil {
 		return nil, err1
 	}

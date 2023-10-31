@@ -8,7 +8,6 @@ type Message struct {
 
 func (m *Message) GetMsgId() uint32 {
 	return m.Id
-
 }
 
 func (m *Message) GetMsgLen() uint32 {

@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/peter-matc/Ainx/zinx/ziface"
@@ -40,7 +41,7 @@ var GlobalObject *GlobalObj
 func (g *GlobalObj) Reload() {
 	data, err := os.ReadFile("conf/zinx.json")
 	if err != nil {
-		panic(err)
+		fmt.Println("缺少配置文件")
 	}
 
 	// 将json文件数据解析到struct中
@@ -64,5 +65,5 @@ func init() {
 	}
 
 	// 从conf/zinx.json加载用户自定义的参数
-	GlobalObject.Reload()
+	//GlobalObject.Reload()
 }
