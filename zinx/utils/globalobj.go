@@ -65,5 +65,5 @@ func init() {
 	}
 
 	// 从conf/zinx.json加载用户自定义的参数
-	//GlobalObject.Reload()
+	GlobalObject.Reload()
 }
