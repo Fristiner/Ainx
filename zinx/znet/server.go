@@ -26,7 +26,9 @@ type Server struct {
 	// 服务器监听的端口
 	Port int
 	// 当前的Server添加一个router，server注册的链接处理对应的业务
-	Router ziface.IRouter
+	//Router ziface.IRouter
+	// 当前server 消息管理模块，用来绑定MsgID
+	MsgHandler ziface.IMsgHandle
 }
 
 // NewServer
@@ -37,18 +39,18 @@ type Server struct {
 // 初始化Server模块
 func NewServer(name string) ziface.IServer {
 	s := &Server{
-		Name:      utils.GlobalObject.Name,
-		IPVersion: "tcp4",
-		IP:        utils.GlobalObject.Host,
-		Port:      utils.GlobalObject.TcpPort,
-		Router:    nil,
+		Name:       utils.GlobalObject.Name,
+		IPVersion:  "tcp4",
+		IP:         utils.GlobalObject.Host,
+		Port:       utils.GlobalObject.TcpPort,
+		MsgHandler: NewMsgHandle(),
 	}
 	return s
 
 }
 
-func (s *Server) AddRouter(router ziface.IRouter) {
-	s.Router = router
+func (s *Server) AddRouter(msgID uint32, router ziface.IRouter) {
+	s.MsgHandler.AddRouter(msgID, router)
 	// 添加路由方法
 	fmt.Println("Add Router success!")
 }
@@ -96,7 +98,7 @@ func (s *Server) Start() {
 			}
 			// 客户端已经连接做一个最大512 字节的回显业务发什么给他回复什么
 			// 将处理新连接的业务方法 和conn进行绑定，得到链接模块
-			dealConn := NewConnection(conn, cid, s.Router)
+			dealConn := NewConnection(conn, cid, s.MsgHandler)
 			cid++
 
 			// 启动当前的业务处理

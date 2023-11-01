@@ -31,5 +31,5 @@ type IServer interface {
 	// @param router
 	//
 
-	AddRouter(router IRouter)
+	AddRouter(msgID uint32, router IRouter)
 }
