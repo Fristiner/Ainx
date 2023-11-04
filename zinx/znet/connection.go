@@ -12,6 +12,7 @@ import (
 	"io"
 	"net"
 
+	"github.com/peter-matc/Ainx/zinx/utils"
 	"github.com/peter-matc/Ainx/zinx/ziface"
 )
 
@@ -90,7 +91,15 @@ func (c *Connection) StartReader() {
 
 		// 从路由中，找到注册绑定的Conn对应的router调用
 		// 执行注册路由方法
-		go c.MsgHandler.DoMsgHandler(&req)
+		//go c.MsgHandler.DoMsgHandler(&req)
+
+		// 交给工作池启动
+		if utils.GlobalObject.WorkerPoolSize > 0 {
+			// 已经开启了工作池，将消息发送给worker工作池来进行处理
+			c.MsgHandler.SendMsgToTaskQueue(&req)
+		} else {
+			go c.MsgHandler.DoMsgHandler(&req)
+		}
 
 	}
 

@@ -64,11 +64,11 @@ func init() {
 		Host:             "0.0.0.0",
 		TcpPort:          8999,
 		Name:             "ZinxServerApp",
-		Version:          "V0.4.0",
+		Version:          "V0.8.0",
 		MaxConn:          1000,
 		MaxPackageSize:   4096,
-		WorkerPoolSize:   10,
-		MaxWorkerTaskLen: 1024,
+		WorkerPoolSize:   10,   // worker工作池的队列的个数
+		MaxWorkerTaskLen: 1024, // 每个worker对应的消息队列的任务的数量的最大值
 	}
 
 	// 从conf/zinx.json加载用户自定义的参数

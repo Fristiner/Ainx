@@ -24,4 +24,11 @@ type IMsgHandle interface {
 	// @Description: 启动worker工作池
 	//
 	StartWorkerPool()
+
+	//
+	// SendMsgToTaskQueue
+	// @Description: 将消息发送给消息任务队列处理
+	// @param request
+	//
+	SendMsgToTaskQueue(request IRequest)
 }
