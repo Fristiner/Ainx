@@ -31,6 +31,11 @@ type GlobalObj struct {
 
 	// 当前Zinx框架数据包的最大值
 	MaxPackageSize uint32
+
+	// 业务工作worker池的worker数量
+	WorkerPoolSize uint32
+	// 运行用户最多开设数量
+	MaxWorkerTaskLen uint32
 }
 
 // 定义一个全局的对外对象GlobalObj
@@ -56,12 +61,14 @@ func (g *GlobalObj) Reload() {
 func init() {
 	// 如果没有加载配置文件 默认的值
 	GlobalObject = &GlobalObj{
-		Host:           "0.0.0.0",
-		TcpPort:        8999,
-		Name:           "ZinxServerApp",
-		Version:        "V0.4.0",
-		MaxConn:        1000,
-		MaxPackageSize: 4096,
+		Host:             "0.0.0.0",
+		TcpPort:          8999,
+		Name:             "ZinxServerApp",
+		Version:          "V0.4.0",
+		MaxConn:          1000,
+		MaxPackageSize:   4096,
+		WorkerPoolSize:   10,
+		MaxWorkerTaskLen: 1024,
 	}
 
 	// 从conf/zinx.json加载用户自定义的参数

@@ -18,4 +18,10 @@ type IMsgHandle interface {
 	//  @param router
 	//
 	AddRouter(msgID uint32, router IRouter)
+
+	//
+	// StartWorkerPool
+	// @Description: 启动worker工作池
+	//
+	StartWorkerPool()
 }
