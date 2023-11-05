@@ -70,7 +70,12 @@ func init() {
 		WorkerPoolSize:   10,   // worker工作池的队列的个数
 		MaxWorkerTaskLen: 1024, // 每个worker对应的消息队列的任务的数量的最大值
 	}
+	_, err := os.ReadFile("conf/zinx.json")
+	if err != nil {
+		fmt.Println("[warn] Missing profile conf/zinx.json")
+	} else {
+		// 从conf/zinx.json加载用户自定义的参数
+		GlobalObject.Reload()
+	}
 
-	// 从conf/zinx.json加载用户自定义的参数
-	GlobalObject.Reload()
 }
