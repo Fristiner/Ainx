@@ -45,7 +45,7 @@ func (p *PingRouter) Handle(request ziface.IRequest) {
 // @Description: Test PostHandle
 // @receiver p
 // @param request
-//  func (p *PingRouter) PostHandle(request ziface.IRequest) {
+//func (p *PingRouter) PostHandle(request ziface.IRequest) {
 //	fmt.Println("Call Router after Handle..")
 //	_, err := request.GetConnection().GetTCPConnection().Write([]byte("after ping...\n"))
 //	if err != nil {
@@ -80,10 +80,6 @@ func (p *HelloZinxRouter) Handle(request ziface.IRequest) {
 //	}
 //}
 
-// DoConnectionBegin
-// @Description:
-// @param connection
-//
 // 创建链接之后的钩子函数
 func DoConnectionBegin(connection ziface.IConnection) {
 	fmt.Println("=======> DoConnectionBegin is Called ...")
@@ -93,17 +89,26 @@ func DoConnectionBegin(connection ziface.IConnection) {
 		return
 	}
 
+	// 给当前连接创建一些属性
+
+	fmt.Println("Set conn Name ， hoe ")
+	connection.SetProperty("Name", "ma")
+
+	connection.SetProperty("Home", "github.com/peter-matc/")
+
+	connection.SetProperty("blog", "gitbook.com")
+
 }
 
-// DoConnctionLost
-// @Description:
-// @param connection
-//
 // 链接断开之前需要执行的函数
 func DoConnctionLost(connection ziface.IConnection) {
 	//
 	fmt.Println("=========> DoConnectionLost is called ...")
 	fmt.Println("connId = ", connection.GetConnID(), " is Lost ....")
+	property, _ := connection.GetProperty("Name")
+
+	fmt.Println("name = ", property)
+
 }
 
 func main() {

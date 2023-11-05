@@ -37,6 +37,27 @@ type IConnection interface {
 	//  @return error
 	// 发送数据，将数据发送给远程客户端
 	SendMsg(msgId uint32, data []byte) error
+	//
+	// SetProperty
+	// @Description: 设置链接属性
+	// @param key
+	// @param value
+	//
+	SetProperty(key string, value interface{})
+	//
+	// GetProperty
+	// @Description: 获取链接属性
+	// @param key
+	// @return interface{}
+	// @return error
+	//
+	GetProperty(key string) (interface{}, error)
+	//
+	// RemoveProperty
+	// @Description: 移除链接属性
+	// @param key
+	//
+	RemoveProperty(key string)
 }
 
 // HandleFunc 定义一个处理连接业务的方法

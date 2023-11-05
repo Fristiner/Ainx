@@ -43,7 +43,7 @@ type Server struct {
 // @return ziface.IServer
 //
 // 初始化Server模块
-func NewServer(name string) ziface.IServer {
+func NewServer() ziface.IServer {
 	s := &Server{
 		Name:       utils.GlobalObject.Name,
 		IPVersion:  "tcp4",
