@@ -32,4 +32,34 @@ type IServer interface {
 	//
 
 	AddRouter(msgID uint32, router IRouter)
+	//
+	// GetConnMgr
+	// @Description: 获取当前server的连接管理器
+	// @return IConnManager
+	//
+	GetConnMgr() IConnManager
+	//
+	// SetOnConnStart
+	// @Description:  设置OnConnStart的钩子函数的方法
+	// @param func(connection IConnection)
+	//
+	SetOnConnStart(func(connection IConnection))
+	//
+	// SetOnConnStop
+	// @Description: 设置OnConnStop的钩子函数的方法
+	// @param func(connection IConnection)
+	//
+	SetOnConnStop(func(connection IConnection))
+	//
+	// CallOnConnStart
+	// @Description: 调用OnConnStart构子函数的方法
+	// @param connection
+	//
+	CallOnConnStart(connection IConnection)
+	//
+	// CallOnConnStop
+	// @Description: 调用OnConnStop构子函数的方法
+	// @param connection
+	//
+	CallOnConnStop(connection IConnection)
 }

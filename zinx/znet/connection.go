@@ -19,6 +19,8 @@ import (
 // Connection
 // @Description: 连接模块
 type Connection struct {
+	// 当前Conn隶属于哪个Server
+	TcpServer ziface.IServer
 	// 当前的Socket TCP套接字
 	Conn *net.TCPConn
 	// 链接的ID
@@ -133,6 +135,9 @@ func (c *Connection) Start() {
 
 	// 启动从当前连接写数据的业务
 	go c.StartWriter()
+
+	// 按照开发者传递进来的 创建链接之后需要调用的处理业务，执行对应的Hook方法
+	c.TcpServer.CallOnConnStart(c)
 }
 
 func (c *Connection) Stop() {
@@ -144,14 +149,20 @@ func (c *Connection) Stop() {
 	}
 
 	c.isClosed = true
-	// 关闭socket 连接
 
+	// 调用开发者注册的，销毁链接之前，需要执行的业务Hook函数
+	c.TcpServer.CallOnConnStop(c)
+
+	// 关闭socket 连接
 	err := c.Conn.Close()
 	if err != nil {
 		return
 	}
 
 	c.ExitChan <- true
+
+	// 将当前的链接从ConnMgr中摘除掉
+	c.TcpServer.GetConnMgr().Remove(c)
 
 	close(c.msgChan)
 	//回收资源
@@ -210,15 +221,20 @@ func (c *Connection) SendMsg(msgId uint32, data []byte) error {
 // @param connID
 // @param router
 // @return *Connection
-func NewConnection(conn *net.TCPConn, connID uint32, MsgHandle ziface.IMsgHandle) *Connection {
+func NewConnection(server ziface.IServer, conn *net.TCPConn, connID uint32, MsgHandle ziface.IMsgHandle) *Connection {
 	c := &Connection{
-		Conn:     conn,
-		ConnID:   connID,
-		isClosed: false, //开启状态
+		TcpServer: server,
+		Conn:      conn,
+		ConnID:    connID,
+		isClosed:  false, //开启状态
 		//HandleApi: callback_api,
 		ExitChan:   make(chan bool, 1),
 		msgChan:    make(chan []byte),
 		MsgHandler: MsgHandle,
 	}
+
+	// 将conn加入到ConnManager中
+	c.TcpServer.GetConnMgr().Add(c)
+
 	return c
 }
